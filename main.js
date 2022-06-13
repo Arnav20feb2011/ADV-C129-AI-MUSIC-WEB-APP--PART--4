@@ -4,7 +4,10 @@ leftWristX=0;
 leftWristY=0;
 rightWristX=0;
 rightWristY=0;
-song_name="";
+song1_status="";
+song2_status="";
+scoreleftWrist=0;
+scorerightWrist=0;
 
 
 function setup(){
@@ -32,6 +35,9 @@ function gotposes(results){
         scoreleftWrist = results[0].pose.keypoints[9].score;
         console.log(scoreleftWrist);
 
+        scorerightWrist = results[0].pose.keypoints[10].score;
+        console.log(scorerightWrist);
+
         leftWrist_x = results[0].pose.leftWrist.x;
         leftWrist_y = results[0].pose.leftWrist.y;
         console.log("leftWrist_x = "+leftWrist_x+" leftWrist_y = "+leftWrist_y);
@@ -50,21 +56,32 @@ function draw(){
     fill("#00ff00");
     stroke("#ff0000"); 
 
-    song_name = song1.isPlaying();
-    console.log(song_name);
+    song1_status = song1.isPlaying();
+    song2_status = song2.isPlaying();
 
 if(scoreleftWrist > 0.2){
 
     circle(leftWrist_x,leftWrist_y,20);
-   song1.stop();
-    if(song_name == false){
-        song2.play();
-    }
-    else{
-        console.log("Falling-Trevor Danial");
+   song2.stop();
+    if(song1_status == false){
+        song1.play();
         document.getElementById("song").innerHTML = "Falling-Trevor Danial";
     }
+      
 
+}
+
+
+
+if(scorerightWrist > 0.2){
+
+    circle(rightWrist_x,rightWrist_y,20);
+   song1.stop();
+    if(song2_status == false){
+        song2.play();
+        document.getElementById("song").innerHTML = "Friends-  Marshmello & Anne-Marie";
+    }
+   
 }
 }
 
